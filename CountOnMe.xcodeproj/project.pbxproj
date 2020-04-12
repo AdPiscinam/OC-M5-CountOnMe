@@ -10,11 +10,11 @@
 		1FA43BD3224E569900F565CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA43BD2224E569900F565CB /* AppDelegate.swift */; };
 		1FA43BD5224E569900F565CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA43BD4224E569900F565CB /* ViewController.swift */; };
 		1FA43BD8224E569900F565CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA43BD6224E569900F565CB /* Main.storyboard */; };
-		1FA43BDA224E569A00F565CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FA43BD9224E569A00F565CB /* Assets.xcassets */; };
 		1FA43BDD224E569A00F565CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FA43BDB224E569A00F565CB /* LaunchScreen.storyboard */; };
 		1FA43BE8224E569A00F565CB /* SimpleCalcTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA43BE7224E569A00F565CB /* SimpleCalcTests.swift */; };
 		1FA43BF3224E569A00F565CB /* SimpleCalcUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA43BF2224E569A00F565CB /* SimpleCalcUITests.swift */; };
 		59691CD724433CD300803CD2 /* lastProject.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59691CD624433CD300803CD2 /* lastProject.strings */; };
+		59691CDD24433F5400803CD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59691CDC24433F5400803CD2 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +39,6 @@
 		1FA43BD2224E569900F565CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
 		1FA43BD4224E569900F565CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../ViewController.swift; sourceTree = "<group>"; };
 		1FA43BD7224E569900F565CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1FA43BD9224E569A00F565CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FA43BDC224E569A00F565CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FA43BDE224E569A00F565CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 		1FA43BE3224E569A00F565CB /* CountOnMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountOnMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +48,7 @@
 		1FA43BF2224E569A00F565CB /* SimpleCalcUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCalcUITests.swift; sourceTree = "<group>"; };
 		1FA43BF4224E569A00F565CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59691CD624433CD300803CD2 /* lastProject.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = lastProject.strings; sourceTree = "<group>"; };
+		59691CDC24433F5400803CD2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,8 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				1FA43BD2224E569900F565CB /* AppDelegate.swift */,
-				1FA43BD9224E569A00F565CB /* Assets.xcassets */,
 				1FA43BDB224E569A00F565CB /* LaunchScreen.storyboard */,
+				59691CDC24433F5400803CD2 /* Assets.xcassets */,
 				1FA43BDE224E569A00F565CB /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -265,8 +265,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FA43BDD224E569A00F565CB /* LaunchScreen.storyboard in Resources */,
-				1FA43BDA224E569A00F565CB /* Assets.xcassets in Resources */,
 				59691CD724433CD300803CD2 /* lastProject.strings in Resources */,
+				59691CDD24433F5400803CD2 /* Assets.xcassets in Resources */,
 				1FA43BD8224E569900F565CB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,7 +478,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vincentsaluzzo.CountOnMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -496,7 +496,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vincentsaluzzo.CountOnMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
