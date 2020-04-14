@@ -9,9 +9,7 @@
 import Foundation
 
 struct Calculation {
-  
-  
-  
+
   var isMultiplicationOrDivisionPresent = false
   var elements = [String]()
   var result : Double = 0
@@ -26,6 +24,7 @@ struct Calculation {
   var expressionHaveEnoughElement: Bool {
     return elements.count >= 3
   }
+  
   mutating func checkPriorities() -> Bool {
     if elements.contains("x") || elements.contains("/") {
       isMultiplicationOrDivisionPresent = true
@@ -43,7 +42,7 @@ struct Calculation {
           elements[element - 1] = "\(result)"
           elements.remove(at: element + 1)
           elements.remove(at: element)
-          
+          print("priorities calculation : \(elements)")
         }
       }
       if let element = elements.firstIndex(where: { $0.hasPrefix("/") }) {
@@ -52,13 +51,12 @@ struct Calculation {
           elements[element - 1] = "\(result)"
           elements.remove(at: element + 1)
           elements.remove(at: element)
-          print(elements)
+          print("priorities calculation : \(elements)")
         }
       }
     } else {
       isMultiplicationOrDivisionPresent = false
     }
-    
   }
   
   mutating func performRemainingCalculation() {
@@ -72,43 +70,35 @@ struct Calculation {
           print("elements are \(elements)")
         }
       }
-      if let element = elements.firstIndex(where: { $0.hasPrefix("-") }) {
+      
+      // "description" is used here to avoir code being confused with numbers like "-X"
+      if let element = elements.firstIndex(where: { $0.description == "-" }) {
         if let value1 = Double(elements[element - 1]), let value2 = Double(elements[element + 1]) {
           result = value1 - value2
           elements[element - 1] = "\(result)"
           elements.remove(at: element + 1)
           elements.remove(at: element)
-          
         }
       }
     }
   }
   
   mutating func performCalculation() {
-    
     guard expressionIsCorrect else {
       delegate?.popIncorrectExpression()
       return
     }
-    
     guard expressionHaveEnoughElement else {
       delegate?.popLaunchNewOperation()
       return
     }
-    
-    
     while checkPriorities() == true  {
       performPrioritesCalculation()
       print(result)
     }
-    
     while  elements.indices.contains(2) {
       performRemainingCalculation()
       print(result)
     }
-    
-    
   }
-  
-  
 }

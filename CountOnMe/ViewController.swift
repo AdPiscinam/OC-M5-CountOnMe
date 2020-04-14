@@ -15,28 +15,16 @@ protocol AlertDelegate {
   
 }
 
-
-
 class ViewController: UIViewController, AlertDelegate {
   
-
-  
-  
-  
   var model = Calculation()
- 
-  
+
   @IBOutlet weak var textView: UITextView!
   @IBOutlet var numberButtons: [UIButton]!
-  
-  
-  
-  
+
   var elements: [String] {
     return textView.text.split(separator: " ").map { "\($0)" }
   }
-  
-
   
   // Retourne false si le dernier élément n'est pas un chiffre
   var canAddOperator: Bool {
@@ -48,7 +36,6 @@ class ViewController: UIViewController, AlertDelegate {
     return textView.text.firstIndex(of: "=") != nil
   }
   
-  // View Life cycles
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -122,17 +109,12 @@ class ViewController: UIViewController, AlertDelegate {
   }
   
   @IBAction func tappedEqualButton() {
-    
-  
-   
+
     model.elements = elements
     model.performCalculation()
     
- 
   }
 
-  
-  
   func popLaunchNewOperation() {
         let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
