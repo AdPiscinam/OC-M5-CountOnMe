@@ -9,7 +9,7 @@
 import Foundation
 
 struct Calculation {
-
+  
   var isMultiplicationOrDivisionPresent = false
   var elements = [String]()
   var result : Double = 0
@@ -25,6 +25,9 @@ struct Calculation {
   var expressionHaveEnoughElement: Bool {
     return elements.count >= 3
   }
+  //
+  
+
   
   mutating func checkPriorities() -> Bool {
     if elements.contains("x") || elements.contains("/") {
@@ -43,7 +46,6 @@ struct Calculation {
           elements[element - 1] = "\(result)"
           elements.remove(at: element + 1)
           elements.remove(at: element)
-          print("priorities calculation : \(elements)")
         }
       }
       if let element = elements.firstIndex(where: { $0.hasPrefix("/") }) {
@@ -52,7 +54,6 @@ struct Calculation {
           elements[element - 1] = "\(result)"
           elements.remove(at: element + 1)
           elements.remove(at: element)
-          print("priorities calculation : \(elements)")
         }
       }
     } else {
@@ -95,11 +96,10 @@ struct Calculation {
     }
     while checkPriorities() == true  {
       performPrioritesCalculation()
-   
     }
     while  elements.indices.contains(2) {
       performRemainingCalculation()
-    
     }
   }
+  
 }

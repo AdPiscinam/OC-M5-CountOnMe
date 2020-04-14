@@ -24,15 +24,23 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
   func assignData() {
     let stringedResult = String(model.result)
     textView.text = stringedResult
-    
   }
   
+  var canAddDecimal: Bool {
+    if let element = elements.last {
+      if element.contains(".") || element.isEmpty {
+        return false
+      }
+    }
+    return true
+  }
   
   var model = Calculation()
 
   @IBOutlet weak var textView: UITextView!
   @IBOutlet var numberButtons: [UIButton]!
-
+  
+  
   var elements: [String] {
     return textView.text.split(separator: " ").map { "\($0)" }
   }
@@ -60,16 +68,12 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
     guard let numberText = sender.title(for: .normal) else {
       return
     }
-    
     if expressionHaveResult {
       textView.text = ""
     }
     textView.text.append(numberText)
     model.elements.append(numberText)
   }
-  
-  
-  
   
   
   @IBAction func tappedAdditionButton() {
@@ -80,7 +84,6 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
       alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
       self.present(alertVC, animated: true, completion: nil)
     }
- 
   }
   
   @IBAction func tappedSubstractionButton() {
@@ -120,11 +123,17 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
   }
   
   @IBAction func tappedEqualButton() {
-
     model.elements = elements
     model.performCalculation()
     assignData()
   }
+  
+  @IBAction func addDecimal() {
+    if canAddDecimal {
+      textView.text += "."
+    }
+  }
+  
 
   func popLaunchNewOperation() {
         let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
