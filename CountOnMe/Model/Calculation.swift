@@ -13,8 +13,9 @@ struct Calculation {
   var isMultiplicationOrDivisionPresent = false
   var elements = [String]()
   var result : Double = 0
-  var delegate: AlertDelegate?
   
+  var alertDelegate : AlertDelegate?
+  var dataTransmissionDelegate : DataTransmissionDelegate?
   // Error check computed variables
   
   var expressionIsCorrect: Bool {
@@ -85,20 +86,20 @@ struct Calculation {
   
   mutating func performCalculation() {
     guard expressionIsCorrect else {
-      delegate?.popIncorrectExpression()
+      alertDelegate?.popIncorrectExpression()
       return
     }
     guard expressionHaveEnoughElement else {
-      delegate?.popLaunchNewOperation()
+      alertDelegate?.popLaunchNewOperation()
       return
     }
     while checkPriorities() == true  {
       performPrioritesCalculation()
-      print(result)
+   
     }
     while  elements.indices.contains(2) {
       performRemainingCalculation()
-      print(result)
+    
     }
   }
 }

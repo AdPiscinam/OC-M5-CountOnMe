@@ -15,7 +15,18 @@ protocol AlertDelegate {
   
 }
 
-class ViewController: UIViewController, AlertDelegate {
+protocol DataTransmissionDelegate {
+  func assignData()
+}
+
+class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate {
+ 
+  func assignData() {
+    let stringedResult = String(model.result)
+    textView.text = stringedResult
+    
+  }
+  
   
   var model = Calculation()
 
@@ -112,7 +123,7 @@ class ViewController: UIViewController, AlertDelegate {
 
     model.elements = elements
     model.performCalculation()
-    
+    assignData()
   }
 
   func popLaunchNewOperation() {
