@@ -10,10 +10,22 @@ import Foundation
 
 struct Calculation {
   
+  
+  
   var isMultiplicationOrDivisionPresent = false
   var elements = [String]()
   var result : Double = 0
-
+  var delegate: AlertDelegate?
+  
+  // Error check computed variables
+  
+  var expressionIsCorrect: Bool {
+    return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && elements.last != "."
+  }
+  
+  var expressionHaveEnoughElement: Bool {
+    return elements.count >= 3
+  }
   mutating func checkPriorities() -> Bool {
     if elements.contains("x") || elements.contains("/") {
       isMultiplicationOrDivisionPresent = true
@@ -31,7 +43,7 @@ struct Calculation {
           elements[element - 1] = "\(result)"
           elements.remove(at: element + 1)
           elements.remove(at: element)
-       
+          
         }
       }
       if let element = elements.firstIndex(where: { $0.hasPrefix("/") }) {
@@ -46,7 +58,7 @@ struct Calculation {
     } else {
       isMultiplicationOrDivisionPresent = false
     }
- 
+    
   }
   
   mutating func performRemainingCalculation() {
@@ -74,16 +86,27 @@ struct Calculation {
   
   mutating func performCalculation() {
     
+    guard expressionIsCorrect else {
+      delegate?.popIncorrectExpression()
+      return
+    }
+    
+    guard expressionHaveEnoughElement else {
+      delegate?.popLaunchNewOperation()
+      return
+    }
+    
+    
     while checkPriorities() == true  {
       performPrioritesCalculation()
-       print(result)
+      print(result)
     }
- 
+    
     while  elements.indices.contains(2) {
       performRemainingCalculation()
       print(result)
     }
- 
+    
     
   }
   
