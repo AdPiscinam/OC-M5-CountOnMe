@@ -10,22 +10,16 @@ import UIKit
 
 protocol AlertDelegate {
   func popIncorrectExpression()
-  
   func popLaunchNewOperation()
-  
 }
-
 protocol DataTransmissionDelegate {
-  func assignData()
+  func assignCorrectData()
+  
 }
 
 class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate {
- 
-  func assignData() {
-    let stringedResult = String(model.result)
-    textView.text = stringedResult
-  }
   
+  //MARK: Properties
   var canAddDecimal: Bool {
     if let element = elements.last {
       if element.contains(".") || element.isEmpty {
@@ -35,32 +29,30 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
     return true
   }
   
-  var model = Calculation()
-
-  @IBOutlet weak var textView: UITextView!
-  @IBOutlet var numberButtons: [UIButton]!
-  
-  
   var elements: [String] {
     return textView.text.split(separator: " ").map { "\($0)" }
   }
   
-  // Retourne false si le dernier élément n'est pas un chiffre
   var canAddOperator: Bool {
     return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && elements.last != "."
   }
   
-  // Vérifie si le signe = est bien présent
   var expressionHaveResult: Bool {
     return textView.text.firstIndex(of: "=") != nil
   }
   
+  //MARK: Instantiate Model
+  var model = Calculation()
+  
+  @IBOutlet weak var textView: UITextView!
+  @IBOutlet var numberButtons: [UIButton]!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
   }
   
-  
-  // View actions
+  //MARK: Actions
   @IBAction func tappedNumberButton(_ sender: UIButton) {
     if textView.text == "0" {
       textView.text = ""
@@ -80,9 +72,7 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
     if canAddOperator {
       textView.text.append(" + ")
     } else {
-      let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-      alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-      self.present(alertVC, animated: true, completion: nil)
+      sendOperatorErrorMessage()
     }
   }
   
@@ -90,20 +80,15 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
     if canAddOperator {
       textView.text.append(" - ")
     } else {
-      let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-      alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-      self.present(alertVC, animated: true, completion: nil)
+      sendOperatorErrorMessage()
     }
   }
-  
   
   @IBAction func tappedMultiplyButton() {
     if canAddOperator {
       textView.text.append(" x ")
     } else {
-      let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-      alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-      self.present(alertVC, animated: true, completion: nil)
+      sendOperatorErrorMessage()
     }
   }
   
@@ -111,21 +96,18 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
     if canAddOperator {
       textView.text.append(" / ")
     } else {
-      let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-      alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-      self.present(alertVC, animated: true, completion: nil)
+      sendOperatorErrorMessage()
     }
   }
   
   @IBAction func tappedACButton() {
     textView.text = "0"
-    print(elements)
   }
   
   @IBAction func tappedEqualButton() {
     model.elements = elements
     model.performCalculation()
-    assignData()
+    assignCorrectData()
   }
   
   @IBAction func addDecimal() {
@@ -134,19 +116,22 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
     }
   }
   
-
+  //MARK: Methods
   func popLaunchNewOperation() {
-        let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        return self.present(alertVC, animated: true, completion: nil)
+    sendLaunchNewCalculusErrorMessage()
   }
   
   func popIncorrectExpression() {
-          let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
-       alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-       return self.present(alertVC, animated: true, completion: nil)
+    sendEnterNewExpressionErrorMessage()
   }
   
-  
+  func assignCorrectData() {
+    if model.result.truncatingRemainder(dividingBy: 1) == 0 {
+      model.verifiedInteger = Int(model.result)
+      print("1 = \(model.verifiedInteger)")
+      textView.text = String(model.verifiedInteger)
+    } else {
+      textView.text = String(model.result)
+    }
+  }
 }
-
