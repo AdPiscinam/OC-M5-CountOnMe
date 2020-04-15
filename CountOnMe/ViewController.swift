@@ -49,7 +49,6 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
   }
   
   //MARK: Actions
@@ -128,7 +127,6 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
   func assignCorrectData() {
     if model.result.truncatingRemainder(dividingBy: 1) == 0 {
       model.verifiedInteger = Int(model.result)
-      print("1 = \(model.verifiedInteger)")
       textView.text = String(model.verifiedInteger)
     } else {
       textView.text = String(model.result)

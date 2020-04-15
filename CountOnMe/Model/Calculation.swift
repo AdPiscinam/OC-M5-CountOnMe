@@ -10,6 +10,7 @@ import Foundation
 
 struct Calculation {
   
+  //MARK: Properties
   var isMultiplicationOrDivisionPresent = false
   var elements = [String]()
   var result : Double = 0
@@ -24,7 +25,8 @@ struct Calculation {
   var expressionHaveEnoughElement: Bool {
     return elements.count >= 3
   }
- 
+  
+  //MARK: Methods
   mutating func checkPriorities() -> Bool {
     if elements.contains("x") || elements.contains("/") {
       isMultiplicationOrDivisionPresent = true
@@ -68,8 +70,7 @@ struct Calculation {
           
         }
       }
-      
-      // "description" is used here to avoir code being confused with numbers like "-X"
+
       if let element = elements.firstIndex(where: { $0.description == "-" }) {
         if let value1 = Double(elements[element - 1]), let value2 = Double(elements[element + 1]) {
           result = value1 - value2
