@@ -79,7 +79,7 @@ class SimpleCalcTests: XCTestCase {
    }
   func testGivenSumExpression_WhenCalculationIsMade_ThenMultiplicationOrDivisionIsFalse() {
     model.elements = ["2", "+", "4"]
-    model.performPrioritesCalculation()
+    model.performPrioritiesCalculation()
      
     XCTAssertTrue(model.isMultiplicationOrDivisionPresent == false)
     
