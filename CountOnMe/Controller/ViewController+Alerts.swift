@@ -9,22 +9,11 @@
 import UIKit
 
 extension UIViewController {
-
-  func sendOperatorErrorMessage() {
-    let alertVC = UIAlertController(title: "Zéro!", message: "Un opérateur est déjà mis !", preferredStyle: .alert)
+  
+  func sendErrorMessage(presenting text: String) {
+    let alertVC = UIAlertController(title: "Zéro!", message: text, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
   }
-  
-  func sendLaunchNewCalculusErrorMessage() {
-    let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
-       alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-       return self.present(alertVC, animated: true, completion: nil)
-  }
-  
-  func sendEnterNewExpressionErrorMessage() {
-  let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
-  alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-  return self.present(alertVC, animated: true, completion: nil)
-  }
+
 }

@@ -12,6 +12,7 @@ protocol AlertDelegate {
   func popIncorrectExpression()
   func popLaunchNewOperation()
 }
+
 protocol DataTransmissionDelegate {
   func assignCorrectData()
   
@@ -20,30 +21,19 @@ protocol DataTransmissionDelegate {
 class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate {
   
   //MARK: Properties
-  var canAddDecimal: Bool {
-    if let element = elements.last {
-      if element.contains(".") || element.isEmpty {
-        return false
-      }
-    }
-    return true
-  }
+  let operatorErrorMessage : String = "Un opérateur est déjà mis !"
+  let launchNewCalculusErrorMessage : String = "Veuillez démarrer un nouveau calcul !"
+  let newExpressionErrorMessage : String = "Veuillez entrer une expression correcte !"
   
+  let formatter = NumberFormatter()
   var elements: [String] {
     return textView.text.split(separator: " ").map { "\($0)" }
-  }
-  
-  var canAddOperator: Bool {
-    return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && elements.last != "."
-  }
-  
-  var expressionHaveResult: Bool {
-    return textView.text.firstIndex(of: "=") != nil
   }
   
   //MARK: Instantiate Model
   var model = Calculation()
   
+  //MARK: Outlets
   @IBOutlet weak var textView: UITextView!
   @IBOutlet var numberButtons: [UIButton]!
   
@@ -59,43 +49,42 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
     guard let numberText = sender.title(for: .normal) else {
       return
     }
-    if expressionHaveResult {
+    if model.expressionHaveResult {
       textView.text = ""
     }
     textView.text.append(numberText)
     model.elements.append(numberText)
   }
   
-  
   @IBAction func tappedAdditionButton() {
-    if canAddOperator {
+    if model.canAddOperator {
       textView.text.append(" + ")
     } else {
-      sendOperatorErrorMessage()
+      sendErrorMessage(presenting: operatorErrorMessage)
     }
   }
   
   @IBAction func tappedSubstractionButton() {
-    if canAddOperator {
+    if model.canAddOperator {
       textView.text.append(" - ")
     } else {
-      sendOperatorErrorMessage()
+      sendErrorMessage(presenting: operatorErrorMessage)
     }
   }
   
   @IBAction func tappedMultiplyButton() {
-    if canAddOperator {
+    if model.canAddOperator {
       textView.text.append(" x ")
     } else {
-      sendOperatorErrorMessage()
+      sendErrorMessage(presenting: operatorErrorMessage)
     }
   }
   
   @IBAction func tappedDivideButton() {
-    if canAddOperator {
+    if model.canAddOperator {
       textView.text.append(" / ")
     } else {
-      sendOperatorErrorMessage()
+      sendErrorMessage(presenting: operatorErrorMessage)
     }
   }
   
@@ -104,32 +93,28 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
   }
   
   @IBAction func tappedEqualButton() {
+    // Memorises the previous result if no new calculation is made
     model.elements = elements
     model.performCalculation()
     assignCorrectData()
   }
   
   @IBAction func addDecimal() {
-    if canAddDecimal {
+    if model.canAddDecimal {
       textView.text += "."
     }
   }
   
   //MARK: Methods
   func popLaunchNewOperation() {
-    sendLaunchNewCalculusErrorMessage()
+    sendErrorMessage(presenting: launchNewCalculusErrorMessage)
   }
   
   func popIncorrectExpression() {
-    sendEnterNewExpressionErrorMessage()
+    sendErrorMessage(presenting : newExpressionErrorMessage)
   }
   
   func assignCorrectData() {
-    if model.result.truncatingRemainder(dividingBy: 1) == 0 {
-      model.verifiedInteger = Int(model.result)
-      textView.text = String(model.verifiedInteger)
-    } else {
-      textView.text = String(model.result)
-    }
+    textView.text = model.calculus
   }
 }
