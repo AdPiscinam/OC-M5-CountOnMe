@@ -31,13 +31,13 @@ struct Calculation {
   }
   
   var canAddOperator: Bool {
-     return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && elements.last != "."
-   }
-   
-   var expressionHaveResult: Bool {
-     return calculus.firstIndex(of: "=") != nil
-   }
-   
+    return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/" && elements.last != "."
+  }
+  
+  var expressionHaveResult: Bool {
+    return calculus.firstIndex(of: "=") != nil
+  }
+  
   
   var canAddDecimal: Bool {
     if let element = elements.last {
@@ -59,28 +59,30 @@ struct Calculation {
   }
   
   mutating func performPrioritiesCalculation() {
-    if elements.indices.contains(2) && checkPriorities(){
-      if let element = elements.firstIndex(where: { $0.hasPrefix("x") }) {
-        if let value1 = Float(elements[element - 1]), let value2 = Float(elements[element + 1]) {
-          result = value1 * value2
-          elements[element - 1] = "\(result)"
-          elements.remove(at: element + 1)
-          elements.remove(at: element)
+    
+    if let sign = (elements.first(where: {  $0 == "/" || $0 == "x" }))  {
+    
+      
+      if let signIndex = elements.firstIndex(of: sign) {
+        if let value1 = Float(elements[signIndex - 1]), let value2 = Float(elements[signIndex + 1]) {
+          switch sign {
+          case "x":
+            result = value1 * value2
+            elements[signIndex - 1] = "\(result)"
+          case "/":
+            result = value1 / value2
+            elements[signIndex - 1] = "\(result)"
+          default:
+            performRemainingCalculation()
+          }
+          elements.remove(at: signIndex + 1)
+          elements.remove(at: signIndex)
         }
       }
-      if let element = elements.firstIndex(where: { $0.hasPrefix("/") }) {
-        if let value1 = Float(elements[element - 1]), let value2 = Float(elements[element + 1]) {
-          result = value1 / value2
-          elements[element - 1] = "\(result)"
-          elements.remove(at: element + 1)
-          elements.remove(at: element)
-        }
-      }
-    } else {
-      isMultiplicationOrDivisionPresent = false
     }
+    print(result)
   }
-  
+
   mutating func performRemainingCalculation() {
     if elements.count > 2  {
       if let element = elements.firstIndex(where: { $0.hasPrefix("+") }) {
@@ -89,10 +91,8 @@ struct Calculation {
           elements[element - 1] = "\(result)"
           elements.remove(at: element + 1)
           elements.remove(at: element)
-          
         }
       }
-
       if let element = elements.firstIndex(where: { $0.description == "-" }) {
         if let value1 = Float(elements[element - 1]), let value2 = Float(elements[element + 1]) {
           result = value1 - value2
@@ -105,8 +105,6 @@ struct Calculation {
   }
   
   mutating func performCalculation() {
-     
-   
     guard expressionIsCorrect else {
       alertDelegate?.popIncorrectExpression()
       return
@@ -115,14 +113,14 @@ struct Calculation {
       alertDelegate?.popLaunchNewOperation()
       return
     }
-    
     while checkPriorities() == true  {
       performPrioritiesCalculation()
     }
     while  elements.indices.contains(2) {
       performRemainingCalculation()
     }
-     calculus = String(result)
+    
+    calculus = String(result)
   
   }
   
@@ -130,5 +128,15 @@ struct Calculation {
     
   }
   
+  func addOperator(signOperator : String) {
+    switch signOperator {
+    case "+" :
+    case "-":
+    case "x" :
+    case "/": 
+    default:
+      alertDelegate?.popIncorrectExpression()
+    }
+  }
   
 }

@@ -13,7 +13,7 @@ class SimpleCalcTests: XCTestCase {
     
   
   var model = Calculation()
-  
+ 
     override func setUp() {
       super.setUp()
       model.elements = [String]()
@@ -100,4 +100,20 @@ class SimpleCalcTests: XCTestCase {
      XCTAssertFalse(((model.alertDelegate?.popLaunchNewOperation()) != nil))
       
     }
+  
+  func testGivenOperationWithMultiplyFirst_WhenCalculationIsMade_ThenExpectedSolutionIsCorrect() {
+     
+    model.elements = ["15", "x", "2", "/", "3"]
+    model.performCalculation()
+    print(model.result)
+    XCTAssertTrue(model.result == 10.0)
+  }
+  
+  func testGivenOperationWithDivideFirst_WhenCalculationIsMade_ThenExpectedSolutionIsCorrect() {
+     
+    model.elements = ["15", "/", "2", "x", "3"]
+    model.performCalculation()
+    print(model.result)
+    XCTAssertTrue(model.result == 22.5)
+  }
 }
