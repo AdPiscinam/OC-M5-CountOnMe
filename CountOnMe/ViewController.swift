@@ -15,7 +15,7 @@ protocol AlertDelegate {
 
 protocol DataTransmissionDelegate {
   func assignCorrectData()
-  
+  func assignSign(_: String)
 }
 
 class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate {
@@ -53,39 +53,23 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
       textView.text = ""
     }
     textView.text.append(numberText)
-    model.elements.append(numberText)
+     
   }
   
   @IBAction func tappedAdditionButton() {
-    if model.canAddOperator {
-      textView.text.append(" + ")
-    } else {
-      sendErrorMessage(presenting: operatorErrorMessage)
-    }
+    assignSign(" + ")
   }
   
   @IBAction func tappedSubstractionButton() {
-    if model.canAddOperator {
-      textView.text.append(" - ")
-    } else {
-      sendErrorMessage(presenting: operatorErrorMessage)
-    }
+    assignSign(" - ")
   }
   
   @IBAction func tappedMultiplyButton() {
-    if model.canAddOperator {
-      textView.text.append(" x ")
-    } else {
-      sendErrorMessage(presenting: operatorErrorMessage)
-    }
+    assignSign(" * ")
   }
   
   @IBAction func tappedDivideButton() {
-    if model.canAddOperator {
-      textView.text.append(" / ")
-    } else {
-      sendErrorMessage(presenting: operatorErrorMessage)
-    }
+    assignSign(" / ")
   }
   
   @IBAction func tappedACButton() {
@@ -95,6 +79,7 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
   @IBAction func tappedEqualButton() {
     // Memorises the previous result if no new calculation is made
     model.elements = elements
+    print(model.elements)
     model.performCalculation()
     assignCorrectData()
   }
@@ -117,4 +102,10 @@ class ViewController: UIViewController, AlertDelegate, DataTransmissionDelegate 
   func assignCorrectData() {
     textView.text = model.calculus
   }
+  
+  func assignSign(_ operatorSign : String) {
+    textView.text += operatorSign
+     
+  }
+  
 }

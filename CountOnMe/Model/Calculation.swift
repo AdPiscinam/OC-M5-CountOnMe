@@ -119,7 +119,7 @@ struct Calculation {
     while  elements.indices.contains(2) {
       performRemainingCalculation()
     }
-    
+    print(result)
     calculus = String(result)
   
   }
@@ -131,12 +131,36 @@ struct Calculation {
   func addOperator(signOperator : String) {
     switch signOperator {
     case "+" :
+      if canAddOperator {
+        dataTransmissionDelegate?.assignCorrectData()
+         } else {
+        //sendErrorMessage(presenting: operatorErrorMessage)
+        print("error")
+      }
     case "-":
+        if canAddOperator {
+        dataTransmissionDelegate?.assignCorrectData()
+         } else {
+        //sendErrorMessage(presenting: operatorErrorMessage)
+        print("error")
+      }
     case "x" :
-    case "/": 
+          if canAddOperator {
+          dataTransmissionDelegate?.assignCorrectData()
+           } else {
+          //sendErrorMessage(presenting: operatorErrorMessage)
+          print("error")
+      }
+    case "/":
+            if canAddOperator {
+            dataTransmissionDelegate?.assignCorrectData()
+             } else {
+            //sendErrorMessage(presenting: operatorErrorMessage)
+            print("error")
+      }
     default:
       alertDelegate?.popIncorrectExpression()
     }
   }
-  
+      
 }
